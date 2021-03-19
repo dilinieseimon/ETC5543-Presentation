@@ -1,0 +1,1062 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    lib_dir: libs
+    css: [styles.css, default]
+    layout: true
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	fig.align = "center",
+	message = FALSE,
+	warning = FALSE
+)
+options(htmltools.dir.version = FALSE)
+library(emo)
+library(xaringanExtra)
+library(fontawesome)
+xaringanExtra::use_panelset()
+```
+
+
+class: middle
+background-image: url("images/background.PNG")
+
+
+<div style="width: 100%; height: 150px; background: #ccc; padding: 1em 1em 1em 1em; text-align:center;">
+<p style="font-size:32px;">ETC5543 Business Analytics Creative Activity</p>
+<p>Summer Internship (Dec 2020 - Feb 2021)</p>
+</div>
+
+
+<div style="position: fixed; bottom: 0; height: 150px;"><p>Dilinie Seimon<br>Monash University</p></div>
+
+---
+
+class: center, middle
+
+<img src="images/dilinieseimon.png" width="200px">
+<h3>Dilinie Seimon</h3>
+
+.left[Master of Business Analytics - Monash University  
+BSc. in Information Technology and Management (Sri Lanka)]  
+
+.left[`r fa(name = "twitter")` [@dilinieeee](https://twitter.com/dilinieeee) <br>`r fa(name = "envelope")` [asei0003@student.monash.edu](mailto:asei0003@student.monash.edu)]
+---
+
+# My Summer Vacation `r emo::ji("sun_with_face")` 
+
+--
+
+`r emo::ji("woman_student")` Visiting Student (remote) at [**KAUST**](https://www.kaust.edu.sa/en) (King Abdullah University of Science and Technology, Saudi Arabia)
+
+--
+
+The Visiting Student Program at KAUST - aims at offering research experience for international students over short courses of time
+
+--
+
+.pull-left[
+
+Supervisor: Dr.Paula Moraga
+
+.small-font[Assistant Professor at KAUST  
+[www.paulamoraga.com](https://www.paulamoraga.com/)
+]]
+
+.pull-right[
+<img src="images/paulamoraga.png" width="150px">
+]
+
+---
+
+# Background
+
+--
+Open and reliable data, analytical tools and collaborative research are crucial for solving global challenges and achieving sustainable development
+
+--
+
+Spatial and spatio-temporal data are used in a wide range of fields including health and many other social and environmental disciplines to improve the evaluation and monitoring of goals both within and across countries.
+
+---
+
+# Task
+
+Create a collection of data sources and tutorials using R, to assist data-driven map visualisation in Africa
+
+--
+
+- Use R packages to download data
+
+--
+
+- Provide examples on how to visualise them using multiple methods
+
+---
+
+# Rspatialdata `r emo::ji("milky_way")`  
+
+Rspatialdata is a collection of data sources and tutorials on visualising different spatial features using R
+
+`r emo::ji("link")`[https://rspatialdata.github.io](https://rspatialdata.github.io/index.html)
+
+```{r rspatialdata, out.height="300px", eval=T}
+knitr::include_graphics("images/rspatialdata.PNG", dpi = NA)
+```
+
+---
+
+# Tools used `r emo::ji("hammer_and_wrench")`
+
+--
+
+- Simple R Markdown website
+
+--
+
+- GitHub Pages
+
+--
+
+- R-packages
+
+--
+
+- HTML and CSS `r emo::ji("sweat_smile")`
+
+--
+
+- GitHub
+
+
+---
+
+# Tutorials
+
+- Administrative boundaries  
+- Open Street Map data  
+- Population  
+- Elevation  
+- Temperature  
+- Rainfall  
+- Humidity  
+- Vegetation  
+- Land Cover  
+- DHS  
+- Malaria  
+
+
+---
+
+# Tutorials
+
+- Administrative boundaries
+- Open Street Map data  
+- Population  
+- .grey[Elevation]  
+- Temperature  
+- .grey[Rainfall]  
+- .grey[Humidity]  
+- Vegetation  
+- Land Cover  
+- .grey[DHS]  
+- .grey[Malaria]  
+
+
+---
+
+# 1. Administrative Boundaries 
+
+Goal : To visualise country and lower level administrative divisions' boundaries
+
+Data : [rgeoboundaries](https://github.com/wmgeolab/rgeoboundaries) R-package
+
+- A client for the [geoBoundaries API](https://www.geoboundaries.org/)
+
+---
+
+# Boundary of a single country
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r admin-boundaries-singlecountry, out.height="400px", eval=T}
+knitr::include_graphics("images/admboundaries-singlecountry-ggplot2.PNG", dpi = NA) 
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r admin-boundaries-singlecountry-code, eval = F, echo = T}
+# Downloading the country boundary of Nigeria
+library(rgeoboundaries)
+nigeria_boundary <- geoboundaries("Nigeria")
+
+# Visualising the boundary of Nigeria using ggplot2
+library(ggplot2)
+ggplot(data = nigeria_boundary) +
+  geom_sf() +
+  geom_sf_label(aes(label = shapeName)) +
+  ggtitle("Boundary of Nigeria") +
+  labs(x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+
+# Boundaries of multiple countries
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r admin-boundaries-multiplecountries, out.height="400px", eval=T}
+knitr::include_graphics("images/admboundaries-multiplecountries-ggplot2.PNG", dpi = NA) 
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r admin-boundaries-multiplecountries-code, eval = F, echo = T}
+# Downloading the country boundaries of Nigeria and Chad
+library(rgeoboundaries)
+nigeria_chad_boundaries <- geoboundaries(c("Nigeria", "Chad"))
+
+# Visualising the boundaries of Nigeria and Chad using ggplot2
+library(ggplot2)
+ggplot(data = nigeria_chad_boundaries) +
+  geom_sf() +
+  geom_sf_label(aes(label = shapeName)) +
+  ggtitle("Boundaries of Nigeria and Chad") +
+  labs(x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+
+# Boundaries of multiple countries
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r admin-boundaries-multiplecountries-leaflet, out.width='100%', fig.height=4, eval=T}
+library(rgeoboundaries)
+# Downloading the country boundaries of Nigeria and Chad
+library(rgeoboundaries)
+nigeria_chad_boundaries <- geoboundaries(c("Nigeria", "Chad"))
+
+# Visualising the boundaries of Nigeria and Chad using leaflet
+library(leaflet)
+nigeria_chad_boundaries %>% leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(label = nigeria_chad_boundaries$shapeName)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r admin-boundaries-multiplecountries-leaflet, eval = F, echo = T}
+```
+
+]
+]
+
+---
+
+# Administrative level 1 boundaries
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r admin-boundaries-admlvl1, out.height="400px", eval=T}
+knitr::include_graphics("images/admboundaries-lvl1-ggplot2.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r admin-boundaries-admlvl1-code, eval = F, echo = T}
+# Downloading admin level 1 boundaries of Nigeria and Chad
+library(rgeoboundaries)
+nigeria_chad_admlvl1_boundaries <- geoboundaries(c("Nigeria", "Chad"), "adm1")
+
+# Visualising admin level 1 boundaries of Nigeria and Chad using ggplot2
+library(ggplot2)
+ggplot(data = nigeria_chad_admlvl1_boundaries) +
+  geom_sf() +
+  ggtitle("Administrative Level 1 boundaries of Nigeria and Chad") +
+  labs(x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+
+# Administrative level 1 boundaries
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r admin-boundaries-admlvl1-leaflet, out.width='100%', fig.height=4, eval=T}
+library(rgeoboundaries)
+# Downloading admin level 1 boundaries of Nigeria and Chad
+library(rgeoboundaries)
+nigeria_chad_admlvl1_boundaries <- geoboundaries(c("Nigeria", "Chad"), "adm1")
+
+# Visualising admin level 1 boundaries of Nigeria and Chad using leaflet
+library(leaflet)
+nigeria_chad_admlvl1_boundaries %>% leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(label = nigeria_chad_admlvl1_boundaries$shapeName)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r admin-boundaries-admlvl1-leaflet, eval = F, echo = T}
+```
+
+]
+]
+
+---
+
+# Administrative level 2 boundaries
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r admin-boundaries-admlvl2, out.height="400px", eval=T}
+knitr::include_graphics("images/admboundaries-lvl2-ggplot2.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r admin-boundaries-admlvl2-code, eval = F, echo = T}
+# Downloading admin level 2 boundaries of Nigeria and Chad
+library(rgeoboundaries)
+nigeria_chad_admlvl2_boundaries <- geoboundaries(c("Nigeria", "Chad"), "adm2")
+
+# Visualising admin level 2 boundaries of Nigeria and Chad using ggplot2
+library(ggplot2)
+ggplot(data = nigeria_chad_admlvl2_boundaries) +
+  geom_sf() +
+  ggtitle("Administrative Level 2 boundaries of Nigeria and Chad") +
+  labs(x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+
+# 2. Open Street Map data 
+
+Goal : To visualise the spatial locations of different objects and features across the world
+
+Data : [osmdata](https://cran.r-project.org/web/packages/osmdata/index.html) R-package
+
+- A client for [OpenStreetMap](https://www.openstreetmap.org/#map=2/-30.8/119.1)
+
+---
+
+# Hospitals in Lagos
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r osm-plainmap, out.height="400px", eval=T}
+knitr::include_graphics("images/osm-plainmap-ggplot2.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r osm-plainmap-code, eval = F, echo = T}
+library(osmdata)
+#creating bounding box for Lagos
+lagos_bb <- getbb("Lagos")
+
+# retrieving data of hospitals in Lagos
+lagos_hospitals <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature(key = "amenity", value = "hospital") %>%
+  osmdata_sf()
+
+# Visualising hospitals in Lagos using ggplot2
+library(ggplot2)
+ggplot()+
+  geom_sf(data = lagos_hospitals$osm_polygons) +
+  ggtitle("Hospitals in Lagos") +
+  labs(x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+
+# Hospitals in Lagos
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r osm-bgmap, out.height="400px", eval=T}
+knitr::include_graphics("images/osm-bgmap-ggplot2.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r osm-bgmap-code, eval = F, echo = T}
+library(osmdata)
+# creating bounding box for Lagos
+lagos_bb <- getbb("Lagos")
+
+# retrieving data of hospitals in Lagos
+lagos_hospitals <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature(key = "amenity", value = "hospital") %>%
+  osmdata_sf()
+
+# retreiving roadmap of lagos
+library(ggmap)
+lagos_map <- get_map(lagos_bb, maptype = "roadmap")
+
+# Visualising hospitals in Lagos using ggplot2
+library(ggplot2)
+ggmap(lagos_map) +
+  geom_sf(data = lagos_hospitals$osm_polygons,
+          inherit.aes = FALSE,
+          colour = "#08519c",
+          fill = "#08306b",
+          alpha = .5,
+          size = 1) +
+  ggtitle("Hospitals in Lagos") +
+  labs(x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+
+# Hospitals in Lagos
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r osm-roadmap, out.height="400px", eval=T}
+knitr::include_graphics("images/osm-roadmap-ggplot2.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r osm-roadmap-code, eval = F, echo = T}
+library(osmdata)
+# creating bounding box for Lagos
+lagos_bb <- getbb("Lagos")
+
+# retrieving data of streets in Lagos
+lagos_streets <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature("highway", c("motorway", "primary", "secondary", "tertiary")) %>%
+  osmdata_sf()
+
+# retrieving data of small streets in Lagos
+lagos_small_streets <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature(key = "highway", value = c("residential", "living_street", "unclassified", "service", "footway")) %>%
+  osmdata_sf()
+
+# retrieving data of rivers in Lagos
+lagos_rivers <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature(key = "waterway", value = "river") %>%
+  osmdata_sf()
+
+# retrieving data of hospitals in Lagos
+lagos_hospitals <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature("amenity", "hospital") %>%
+  osmdata_sf()
+
+# visualising all retreived features over each other to form a map of Lagos
+library(ggplot2)
+ggplot() +
+  geom_sf(data = lagos_streets$osm_lines, inherit.aes = FALSE, color = "#ffbe7f", size = .4, alpha = .8) +
+  geom_sf(data = lagos_small_streets$osm_lines, inherit.aes = FALSE, color = "#a6a6a6", size = .2, alpha = .8) +
+  geom_sf(data = lagos_rivers$osm_lines, inherit.aes = FALSE, color = "#7fc0ff", size = .8, alpha = .5) +
+  geom_sf(data = lagos_hospitals$osm_polygons, inherit.aes = FALSE, colour = "#08519c", fill = "#08306b",alpha = .5, size = 1) +
+  coord_sf(xlim = c(3.23, 3.56), ylim = c(6.4,6.629), expand = FALSE) +
+  theme_bw() +
+  ggtitle("Hospitals in Lagos") +
+  labs(x = "Latitude",
+       y = "Longitude")
+```
+
+]
+]
+
+---
+
+# Hospitals in Lagos
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r osm-leaflet, out.width='100%', fig.height=4, eval=T}
+library(osmdata)
+#creating bounding box for Lagos
+lagos_bb <- getbb("Lagos")
+
+# retrieving data of hospitals in Lagos
+lagos_hospitals <- lagos_bb %>%
+  opq() %>%
+  add_osm_feature(key = "amenity", value = "hospital") %>%
+  osmdata_sf()
+
+# Visualising hospitals in Lagos using leaflet
+library(leaflet)
+leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(data = lagos_hospitals$osm_polygons,
+              label = lagos_hospitals$osm_polygons$name)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r osm-leaflet, eval = F, echo = T}
+```
+
+]
+]
+
+---
+
+# 3. Population
+
+Goal : To visualise population of different countries and administrative divisions of countries
+
+Data : [wopr](https://github.com/wpgp/wopr) R-package
+
+- A client for the [WorldPop Open Population Repository](https://wopr.worldpop.org/)
+
+---
+
+# Administrative level 2 division population
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r pop-nigeria-admlvl2, out.height="400px", eval=T}
+knitr::include_graphics("images/pop-admlvl2.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r pop-nigeria-admlvl2-code, eval = F, echo = T}
+library(wopr)
+# Select files from the catalogue by subsetting the data frame
+selection <- subset(catalogue,
+                    country == 'NGA' &
+                    category == 'Population' & 
+                    version == 'v1.2')
+
+# Download selected files
+downloadData(selection)
+
+library(sf)
+library(here)
+# Reading in shapefile from downloaded data
+admin_level2_shape <- st_read(here::here("wopr/NGA_population_v1_2_admin_level2_boundaries.shp"))
+
+# Visualising population of administrative level 2 divisions of Nigeria using ggplot2
+admin_level2_shape %>% 
+  ggplot(aes(fill = mean)) +
+  geom_sf() +
+  labs(title = "Choropleth map of population in Nigeria",
+       subtitle = "Administrative level 2 divisions") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_continuous(name = "Population")
+```
+
+]
+]
+
+---
+
+# Administrative level 2 division population
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r pop-nigeria-admlvl2-leaflet, out.width='100%', fig.height=4, eval=T}
+library(sf)
+library(here)
+# Reading in shapefile from downloaded data
+admin_level2_shape <- st_read(here::here("wopr/NGA_population_v1_2_admin_level2_boundaries.shp"), quiet = TRUE)
+
+# Visualising population of administrative level 2 divisions of Nigeria using leaflet
+library(leaflet)
+color_palette <- colorBin("Blues", domain = admin_level2_shape$mean)
+
+admin_level2_shape %>% leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(
+    fillColor = ~color_palette(mean),
+    weight = 2,
+    opacity = 1,
+    color = "white",
+    fillOpacity = 0.7,
+    label = admin_level2_shape$statename) %>%
+  addLegend(
+    pal = color_palette,
+    values = ~mean,
+    opacity = 0.7,
+    title = "Population",
+    position = "bottomright")
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r pop-nigeria-admlvl2-leaflet, eval = F, echo = T}
+```
+
+]
+]
+
+---
+
+# Administrative level 3 division population
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r pop-nigeria-admlvl3, out.height="400px", eval=T}
+knitr::include_graphics("images/pop-admlvl3.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r pop-nigeria-admlvl3-code, eval = F, echo = T}
+library(wopr)
+# Select files from the catalogue by subsetting the data frame
+selection <- subset(catalogue,
+                    country == 'NGA' &
+                    category == 'Population' & 
+                    version == 'v1.2')
+
+# Download selected files
+downloadData(selection)
+
+library(sf)
+library(here)
+# Reading in shapefile from downloaded data
+admin_level3_shape <- st_read(here::here("wopr/NGA_population_v1_2_admin_level2_boundaries.shp"))
+
+# Visualising population of administrative level 3 divisions of Nigeria using ggplot2
+admin_level3_shape %>% 
+  ggplot(aes(fill = mean)) +
+  geom_sf() +
+  labs(title = "Choropleth map of population in Nigeria",
+       subtitle = "Administrative level 3 divisions") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_continuous(name = "Population")
+```
+
+]
+]
+
+---
+
+# Cartogram
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r pop-nigeria-cartogram, out.height="400px", eval=T}
+knitr::include_graphics("images/pop-cartogram.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r pop-nigeria-cartogram-code, eval = F, echo = T}
+library(wopr)
+# Select files from the catalogue by subsetting the data frame
+selection <- subset(catalogue,
+                    country == 'NGA' &
+                    category == 'Population' & 
+                    version == 'v1.2')
+
+# Download selected files
+downloadData(selection)
+
+library(sf)
+library(here)
+# Reading in shapefile from downloaded data
+admin_level3_shape <- st_read(here::here("wopr/NGA_population_v1_2_admin_level2_boundaries.shp"))
+
+# transforming the coordinates of the object to a new reference system.
+# while we have used a tranformation with EPSG code 2311, specific for Nigeria, codes for other countries can be found at https://epsg.io/
+admin_level2_transformed <- st_transform(admin_level2_sf, crs = 2311)
+
+# creating the cartogram
+admin_level2_cartogram <- cartogram_cont(admin_level2_transformed, "mean", itermax=5)
+
+# visualising the created cartogram
+ggplot() +
+  geom_sf(data = admin_level2_cartogram, aes(fill = mean)) +
+  labs(title = "Cartogram of population in Nigeria",
+       subtitle = "Administrative level 2 divisions") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_continuous(name = "Population")
+```
+
+]
+]
+
+---
+
+# 4. Temperature
+
+Goal : To visualise different aggregates of temperature across the world
+
+Data : [raster](https://cran.r-project.org/web/packages/raster/index.html) R-package
+
+- A client for the [WorldClim database](https://www.worldclim.org/)
+
+---
+
+# Monthly maximum temperature
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r temp-monthly-max, out.height="400px", eval=T}
+knitr::include_graphics("images/temp-monthly-max.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r temp-monthly-max-code, eval = F, echo = T}
+library(raster)
+library(tidyverse)
+
+# Downloading monthly maximum temperature data
+tmax_data <- getData(name = "worldclim", var = "tmax", res = 10)
+
+# Converting temperature values to Celcius
+gain(tmax_data)=0.1
+
+# Converting the raster object into a dataframe
+tmax_data_df <- as.data.frame(tmax_data, xy = TRUE, na.rm = TRUE)
+rownames(tmax_data_df) <- c()
+
+# Renaming the month columns, Converting the dataframe into long format and converting month column into a factor
+tmax_data_df_long <- tmax_data_df %>%
+  rename("January" = "tmax1", "February" = "tmax2", "March" = "tmax3", "April" = "tmax4",
+         "May" = "tmax5", "June" = "tmax6", "July" = "tmax7", "August" = "tmax8",
+         "September" = "tmax9", "October" = "tmax10", "November" = "tmax11", "December" = "tmax12") %>%
+  pivot_longer(c(-x,-y), names_to = "month", values_to = "temp")
+
+tmax_data_df_long$month = factor(tmax_data_df_long$month, levels = month.name)
+
+library(ggplot2)
+tmax_data_df_long %>%
+  ggplot(aes(x=x,y=y)) +
+  geom_raster(aes(fill = temp)) +
+  facet_wrap(~month) +
+  labs(title = "Monthly maximum temperatures",
+       subtitle = "For the years 1970-2000") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_gradientn(name = "Temperature (°C)",
+                       colours=c("#006D9B","#0094D1","#68C1E6", "#FEED99","#AF3301"),
+                       breaks = c(-40, -20, 0, 20, 40))
+```
+
+]
+]
+
+---
+
+# Mean monthly maximum temperature
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r temp-mean-monthly-max, out.height="400px", eval=T}
+knitr::include_graphics("images/temp-mean-monthly-max.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r temp-mean-monthly-max-code, eval = F, echo = T}
+library(raster)
+library(magrittr)
+
+# Downloading monthly maximum temperature data
+tmax_data <- getData(name = "worldclim", var = "tmax", res = 10)
+
+# Converting temperature values to Celcius
+gain(tmax_data)=0.1
+
+# Calculating mean of the monthly maximum temperatures
+tmax_mean <- mean(tmax_data)
+
+# Converting the raster object into a dataframe
+tmax_mean_df <- as.data.frame(tmax_mean, xy = TRUE, na.rm = TRUE)
+
+library(ggplot2)
+tmax_mean_df %>%
+  ggplot(aes(x=x,y=y)) +
+  geom_raster(aes(fill = layer)) +
+  labs(title = "Mean monthly maximum temperatures",
+       subtitle = "For the years 1970-2000") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_gradientn(name = "Temperature (°C)",
+                       colours=c("#0094D1","#68C1E6", "#FEED99","#AF3301"),
+                       breaks = c(-20, 0, 20, 40))
+```
+
+]
+]
+
+---
+
+# Mean monthly maximum temperature
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r temp-mean-monthly-max-nigeria, out.height="400px", eval=T}
+knitr::include_graphics("images/temp-mean-monthly-max-nigeria.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r temp-mean-monthly-max-nigeria-code, eval = F, echo = T}
+library(raster)
+library(magrittr)
+library(sf)
+
+# Downloading monthly maximum temperature data
+tmax_data <- getData(name = "worldclim", var = "tmax", res = 10)
+
+# Converting temperature values to Celcius
+gain(tmax_data)=0.1
+
+# Calculating mean of the monthly maximum temperatures
+tmax_mean <- mean(tmax_data)
+
+# Downloading the boundary of Nigeria
+library(rgeoboundaries)
+nigeria_sf <- geoboundaries("Nigeria")
+
+# Extracting temperature data of Nigeria
+tmax_mean_ngeria <- raster::mask(tmax_mean, as_Spatial(nigeria_sf))
+
+# Converting the raster object into a dataframe
+tmax_mean_nigeria_df <- as.data.frame(tmax_mean_ngeria, xy = TRUE, na.rm = TRUE)
+
+library(ggplot2)
+tmax_mean_nigeria_df %>%
+  ggplot(aes(x=x,y=y)) +
+  geom_raster(aes(fill = layer)) +
+  geom_sf(data = nigeria_sf, inherit.aes = FALSE, fill=NA) +
+  labs(title = "Mean monthly maximum temperatures in Nigeria",
+       subtitle = "For the years 1970-2000") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_gradient(name = "Temperature (°C)",
+                      low =  "#FEED99",
+                      high = "#AF3301")
+```
+
+]
+]
+
+---
+
+
+# Maximum temperature of the warmest month
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r temp-warmest-month, out.height="400px", eval=T}
+knitr::include_graphics("images/temp-bioclim.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r temp-warmest-month-code, eval = F, echo = T}
+library(raster)
+library(magrittr)
+
+# Downloading bioclimatic data
+bio <- getData(name = "worldclim", var = "bio", res = 10)
+
+# Converting temperature values to Celcius
+gain(bio)=0.1
+
+# Extracting only the 5th bioclimatic variable and converting the raster object into a dataframe
+bio5_df <- as.data.frame(bio$bio5, xy = TRUE, na.rm = TRUE)
+
+library(ggplot2)
+bio5_df %>%
+  ggplot(aes(x=x,y=y)) +
+  geom_raster(aes(fill = bio5))  +
+  labs(title = "Maximum temperature of the warmest month",
+       subtitle = "In the time period 1970-2000") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  scale_fill_gradientn(name = "Temperature (°C)",
+                       colours=c("#0094D1","#68C1E6", "#FEED99","#AF3301"),
+                       breaks = c(-20, 0, 20, 40))
+```
+
+]
+]
+
+---
+
+# 5. Vegetation
+
+Goal : To visualise different vegetation indexes for selected geographical areas
+
+Data : [MODIStsp](https://cran.r-project.org/web/packages/MODIStsp/index.html) R-package
+
+- A client for the [NASA Moderate Resolution Imaging Spectroradiometer  Data Products](https://modis.gsfc.nasa.gov/data/dataprod/)
+
+---
+
+# NDVI in Mongolia
+
+.panelset[
+.panel[.panel-name[Map]
+
+```{r veg-mongolia-ndvi, out.height="400px", eval=T}
+knitr::include_graphics("images/vegetation-mongolia-ndvi.PNG", dpi = NA)
+```
+
+]
+.panel[.panel-name[Code]
+
+```{r veg-mongolia-ndvi-code, eval = F, echo = T}
+library(rgeoboundaries)
+library(sf)
+library(MODIStsp)
+
+mongolia_boundary <- geoboundaries("Mongolia")
+spatial_filepath <- "VegetationData/mongolia.shp"
+st_write(mongolia_boundary, paste0(spatial_filepath))
+
+MODIStsp(gui             = FALSE,
+         out_folder      = "VegetationData",
+         out_folder_mod  = "VegetationData",
+         selprod         = "Vegetation_Indexes_16Days_1Km (M*D13A2)",
+         bandsel         = "NDVI", 
+         user            = "mstp_test" ,
+         password        = "MSTP_test_01",
+         start_date      = "2020.06.01", 
+         end_date        = "2020.06.17", 
+         verbose         = FALSE,
+         spatmeth        = "file",
+         spafile         = spatial_filepath,
+         out_format = "GTiff")
+
+library(raster)
+library(here)
+library(ggplot2)
+library(viridis)
+
+NDVI_raster <- raster(here::here("VegetationData/mongolia/VI_16Days_1Km_v6/NDVI/MYD13A2_NDVI_2020_153.tif"))
+NDVI_raster <- projectRaster(NDVI_raster, crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+NDVI_raster <- raster::mask(NDVI_raster, as_Spatial(mongolia_boundary))
+
+# Converting the raster object into a dataframe
+NDVI_df <- as.data.frame(NDVI_raster, xy = TRUE, na.rm = TRUE)
+rownames(NDVI_df) <- c()
+# Divide values by 10000 to have NDVI values between -1 and 1
+ggplot() + 
+  geom_raster(data = NDVI_df,
+              aes(x = x, y = y, fill = MYD13A2_NDVI_2020_153/10000)) +
+  geom_sf(data = mongolia_boundary, inherit.aes = FALSE, fill = NA) +
+  scale_fill_viridis(name = "NDVI") +
+  labs(title = "NDVI in Mongolia",
+       subtitle = "01-06-2020",
+       x = "Longitude",
+       y = "Latitude")
+```
+
+]
+]
+
+---
+class: inverse, middle, center
+
+Demo [rspatialdata](https://rspatialdata.github.io/)
+
+---
+
+# Our vision
+
+--
+
+Not simply follow the tutorials and examples
+
+--
+
+But understand the process and apply the process
+
+--
+
+# What's next?
+
+- Abstract submission for useR 2021
+- Convert tutorials into interactive learnr tutorials for the [afrimapr](https://afrimapr.github.io/afrimapr.website/) project
+
+---
+
+class: middle
+background-image: url("images/background.PNG")
+
+
+<div style="width: 100%; height: 100px; background: #ccc; padding: 1em 1em 1em 1em; text-align:center;">
+<p style="font-size:32px;">Thank You</p>
+</div>
